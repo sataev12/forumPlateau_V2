@@ -1,11 +1,12 @@
 <?php
-    $category = $result["data"]['category']; 
-    $topics = $result["data"]['topics']; 
+    $category = $result["data"]['categorie']; 
+    $topics = $result["data"]['sujets'];
 ?>
 
 <h1>Liste des topics</h1>
 
 <?php
 foreach($topics as $topic ){ ?>
-    <p><a href="#"><?= $topic ?></a> par <?= $topic->getUser() ?></p>
+    <p><a href="index.php?ctrl=forum&action=listMessageBySujet&id=<?= $topic->getId() ?>"><?= $topic ?></a> par <?= $topic->getTitre() ?>  </p>
+    
 <?php }

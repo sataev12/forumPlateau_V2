@@ -12,8 +12,8 @@ final class Sujet extends Entity{
     private $id;
     private $titre;
     private $dateCreation;
-    private $categorie_id;
-    private $utilisateur_id;
+    private $categorie;
+    private $utilisateur;
 
     public function __construct($data){         
         $this->hydrate($data);        
@@ -62,9 +62,9 @@ final class Sujet extends Entity{
     /**
      * Get the value of categorie_id
      */ 
-    public function getCategorie_id()
+    public function getCategorie()
     {
-        return $this->categorie_id;
+        return $this->categorie;
     }
 
     /**
@@ -72,9 +72,9 @@ final class Sujet extends Entity{
      *
      * @return  self
      */ 
-    public function setCategorie_id($categorie_id)
+    public function setCategorie($categorie)
     {
-        $this->categorie_id = $categorie_id;
+        $this->categorie = $categorie;
 
         return $this;
     }
@@ -82,9 +82,9 @@ final class Sujet extends Entity{
     /**
      * Get the value of utilisateur_id
      */ 
-    public function getUtilisateur_id()
+    public function getUtilisateur()
     {
-        return $this->utilisateur_id;
+        return $this->utilisateur;
     }
 
     /**
@@ -92,9 +92,9 @@ final class Sujet extends Entity{
      *
      * @return  self
      */ 
-    public function setUtilisateur_id($utilisateur_id)
+    public function setUtilisateur($utilisateur)
     {
-        $this->utilisateur_id = $utilisateur_id;
+        $this->utilisateur = $utilisateur;
 
         return $this;
     }
