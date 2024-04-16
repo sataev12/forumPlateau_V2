@@ -13,4 +13,14 @@ class CategorieManager extends Manager{
     public function __construct(){
         parent::connect();
     }
+
+    public function modifierCategorieManager($id) {
+
+        $nom = filter_input(INPUT_POST, "nom", FILTER_SANITIZE_SPECIAL_CHARS);
+        // $id = filter_input(INPU);
+
+        // $sql = "UPDATE ".$this->tableName." c
+        //         SET  " 
+    }
+
 }

@@ -24,7 +24,7 @@ class SujetManager extends Manager{
         // la requête renvoie plusieurs enregistrements --> getMultipleResults
         return  $this->getMultipleResults(
             DAO::select($sql, ['id' => $id]), 
-            $this->className
+            $this->className 
         );
     }
 }

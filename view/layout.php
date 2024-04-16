@@ -40,7 +40,8 @@
                                 <a href="index.php?ctrl=security&action=login">Connexion</a>
                                 <a href="index.php?ctrl=security&action=register">Inscription</a>
                                 <a href="index.php?ctrl=forum&action=index">Liste des catégories</a>
-                                
+                                <a href="index.php?ctrl=sujet&action=ajoutSujet">Ajouter le sujet</a>
+                                <a href="index.php?ctrl=categorie&action=ajoutCategorie">Ajouter une categorie</a>
                             <?php
                             }
                         ?>

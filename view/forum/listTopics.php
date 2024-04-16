@@ -3,7 +3,7 @@
     $topics = $result["data"]['sujets'];
 ?>
 
-<h1>Liste des topics</h1>
+<h1>Liste des sujets</h1>
 
 <?php
 foreach($topics as $topic ){ ?>

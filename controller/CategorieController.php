@@ -1,0 +1,75 @@
+<?php
+namespace Controller;
+
+use App\Session;
+use App\AbstractController;
+use App\ControllerInterface;
+use Model\Managers\CategorieManager;
+use Model\Managers\SujetManager;
+
+class CategorieController extends AbstractController implements ControllerInterface {
+
+    public function ajoutCategorie() {
+        
+        $nom = filter_input(INPUT_POST, "nom", FILTER_SANITIZE_FULL_SPECIAL_CHARS);
+        $categorieManager = new CategorieManager();
+        if(isset($_POST["submit"])) {
+            
+            if($nom != "") {
+                
+                $data = ['nom' => $nom];
+                $categorieManager->add($data);
+            }
+        }
+        // $data = ['nom' => 'test'];
+        
+        // $categorieManager->add($data);
+
+        return[
+            "view" => VIEW_DIR."ajout/ajoutCategories.php",
+            "meta_description" => "Ajouter un nouveau categorie",
+            "data" => [
+                
+            ]
+        ];
+
+        
+    }
+
+    public function supprimerCategorie($id) {
+        
+        $categorieManager = new CategorieManager();
+        $categorieManager->delete($id);
+        
+
+        $this->redirectTo("forum","index");
+    
+    }
+
+    public function modifieCategorie($id) {
+
+    }
+
+    public function modifierCategorie($id) {
+
+        
+        $categoryManager = new CategorieManager();
+        
+        $categories = $categoryManager->findOneById($id);
+        return [
+            "view" => VIEW_DIR."modifier/modifieCategorie.php",
+            "meta_description" => "Formulaire pour modifier le categorie",
+            "data" => [
+                "categories" => $categories
+            ]
+        ];
+        
+    }
+
+    public function modifierCategorieAct($id){
+
+        var_dump($id); die;
+        $categorieManager = new CategorieManager;
+        $categorieManager->modifierCategorieManager($id);
+    }
+}

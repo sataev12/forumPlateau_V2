@@ -2,7 +2,7 @@
     $messages = $result["data"]['messages'];
 ?>
 
-<h1>Liste des message</h1>
+<h1>Liste des messages</h1>
 
 <?php
 foreach($messages as $message ){ ?>

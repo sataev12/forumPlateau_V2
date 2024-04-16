@@ -29,25 +29,7 @@ class ForumController extends AbstractController implements ControllerInterface{
 
 
 
-    public function listTopicsByCategory($id) {
-        
-        $topicManager = new SujetManager();
-        $categoryManager = new CategorieManager();
-        $categorie = $categoryManager->findOneById($id);
-        //var_dump($categorie);die;
-        $sujets = $topicManager->findTopicsByCategory($id);
-
     
-
-        return [
-            "view" => VIEW_DIR."forum/listTopics.php",
-            "meta_description" => "Liste des topics par catégorie : ".$categorie,
-            "data" => [
-                "categorie" => $categorie,
-                "sujets" => $sujets
-            ]
-        ];
-    }
 
     public function listMessageBySujet($id) {
 
@@ -65,5 +47,7 @@ class ForumController extends AbstractController implements ControllerInterface{
             ]
             ];
     }
+
+    
 
 }
