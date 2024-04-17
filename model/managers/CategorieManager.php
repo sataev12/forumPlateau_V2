@@ -14,13 +14,15 @@ class CategorieManager extends Manager{
         parent::connect();
     }
 
-    public function modifierCategorieManager($id) {
+    public function modifierCategorieManager($data) {
+        
+            $sql = "UPDATE ".$this->tableName." 
+                    SET nom = :nom
+                    WHERE id_categorie = :id";
 
-        $nom = filter_input(INPUT_POST, "nom", FILTER_SANITIZE_SPECIAL_CHARS);
-        // $id = filter_input(INPU);
+            DAO::update($sql, $data);
+        }
 
-        // $sql = "UPDATE ".$this->tableName." c
-        //         SET  " 
-    }
+    
 
 }

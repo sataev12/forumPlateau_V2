@@ -67,9 +67,26 @@ class CategorieController extends AbstractController implements ControllerInterf
     }
 
     public function modifierCategorieAct($id){
-
-        var_dump($id); die;
+        $nom = filter_input(INPUT_POST, "nom", FILTER_SANITIZE_SPECIAL_CHARS);
+        $id = filter_input(INPUT_GET, 'id', FILTER_VALIDATE_INT);
+        
+        
         $categorieManager = new CategorieManager;
-        $categorieManager->modifierCategorieManager($id);
-    }
+        
+
+        if(isset($_POST["submit"])) {
+            if($nom !== ""){
+                $data = [
+                    "id" => $id,
+                    "nom" => $nom
+                ];
+                $categorieManager->modifierCategorieManager($data);
+
+                $this->redirectTo("forum", "index");
+                
+            }
+           
+        }
+    }   
+
 }
