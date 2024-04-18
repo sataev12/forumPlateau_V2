@@ -27,4 +27,13 @@ class SujetManager extends Manager{
             $this->className 
         );
     }
+
+    public function modifierSujetManager($data) {
+
+        $sql = "UPDATE ".$this->tableName." 
+                    SET titre = :titre 
+                    WHERE id_sujet = :id";
+
+            DAO::update($sql, $data);
+    }
 }

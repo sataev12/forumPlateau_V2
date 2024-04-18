@@ -3,8 +3,7 @@
 ?>
 
 <h1>Liste des messages</h1>
-
 <?php
 foreach($messages as $message ){ ?>
-    <p><?= $message->getTexte() ?></p>
+    <p><?= $message->getTexte() ?> </p>
 <?php }
