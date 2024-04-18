@@ -14,13 +14,5 @@ class AjoutSujetMenager extends Manager{
         parent::connect();
     }
 
-    // récupérer tous les topics d'une catégorie spécifique (par son id)
-    public function ajoutSujetFunction() {
-
-        $sql = "SELECT * 
-                FROM ".$this->tableName." s";
-               
-       
-       
-    }
+    
 }

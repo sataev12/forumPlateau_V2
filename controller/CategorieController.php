@@ -46,9 +46,6 @@ class CategorieController extends AbstractController implements ControllerInterf
     
     }
 
-    public function modifieCategorie($id) {
-
-    }
 
     public function modifierCategorie($id) {
 
