@@ -37,7 +37,7 @@ class SujetController extends AbstractController implements ControllerInterface 
         $ajoutSujetMenager = new AjoutSujetMenager();
 
         $categorie = $categoryManager->findOneById($id);
-        $utilisateurs = $utilisateurManager->findAll(["pseudonyme", "DESC"]);
+        $utilisateurs = $utilisateurManager->findOneById($id);
 
         return[
             "view" => VIEW_DIR."ajout/ajoutSujet.php",
@@ -50,24 +50,30 @@ class SujetController extends AbstractController implements ControllerInterface 
     }
 
     public function ajoutSujetAct($id) {
-        
+        $categoryManager = new CategorieManager();
         $nom = filter_input(INPUT_POST, "nom", FILTER_SANITIZE_SPECIAL_CHARS);
-        $categorieId = filter_input(INPUT_POST, 'categorie', FILTER_SANITIZE_FULL_SPECIAL_CHARS );
-        $utilisateurId = filter_input(INPUT_POST, 'utilisateur', FILTER_SANITIZE_SPECIAL_CHARS);
         
         $sujetManager = new AjoutSujetMenager();
+        $categorie = $categoryManager->findOneById($id);
 
-        if(isset($_POST["submit"]) && ($nom != "") && ($categorieId != "") && ($utilisateurId != "")) {
+        if(isset($_POST["submit"]) && ($nom != "")) {
             
             $data = [
                 "titre" => $nom,
                 "categorie_id" => $id,
-                "utilisateur_id" => $utilisateurId 
+                "utilisateur_id" => 1 
             ];
             $sujetManager->add($data);
-            $this->redirectTo("sujet", "ajoutSujet");
         }
 
+        return [
+            "view" => VIEW_DIR."ajout/ajoutSujet.php",
+            "meta_description" => "Formulaire pour ajouter le sujet",
+            "data" => [
+                "categorie" => $categorie
+            ]
+        ];
+        
     }
 
     public function listSujet() {
