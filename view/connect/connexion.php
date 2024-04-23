@@ -5,7 +5,7 @@
         <input type="email" name="email" id="email"><br>
 
         <label for="password">Mot de passe</label>
-        <input type="password" name="password" id="password"><br>
+        <input type="password" name="motDePasse" id="password"><br>
 
         <input type="submit" name="submit" value="Se connecter">
     </form>

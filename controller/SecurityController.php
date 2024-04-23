@@ -35,10 +35,9 @@ class SecurityController extends AbstractController{
                     }else{
                         echo "<p>"."les mot des passe ne sont pas identique ou trop court"."</p>";
                     }
-                }else{
-                    var_dump("utilisateur existe, rederiger vers une page de connexion, pour qu'il se connecte");
-                    // $this->redirectTo("forum", "index");
                 }
+            }else{
+                echo "<p>"."probleme de saisie dans les champs de formulaire"."</p>";
             }
         }
         return [
@@ -49,8 +48,44 @@ class SecurityController extends AbstractController{
             ]
         ];
     }
+
+
+    // methode login, pour se connecté si l'utilisateur a déjà la compte
     public function login () {
-        var_dump("ok"); die;
+
+        $utilisateurManager = new UtilisateurManager;
+
+        $email = filter_input(INPUT_POST, "email", FILTER_SANITIZE_FULL_SPECIAL_CHARS, FILTER_VALIDATE_EMAIL);
+        $password = filter_input(INPUT_POST, "motDePasse", FILTER_SANITIZE_FULL_SPECIAL_CHARS);
+        
+        // si les filtres sont valide
+        if($email && $password) {
+            
+            $utilisateur = $utilisateurManager->findUserByEmail($email);
+            
+            // si l'utilisateur existe
+            if(!empty($utilisateur)) {
+                
+                $hash = $utilisateur[0]["motDePasse"];
+                
+                if(password_verify($password, $hash)) {
+                    $_SESSION["user"] = $utilisateur;
+                    $this->redirectTo("forum", "index");
+                }else{
+                    echo "<p>"."utilisateur inconnu ou mot de passe est incorrect"."</p>";
+                }
+            }else{
+                echo "<p>"."utilisateur inconnu ou mot de passe est incorrect"."</p>";
+            }
+        }
+
+        return [
+            "view" => VIEW_DIR."connect/connexion.php",
+            "meta_description" => "Une formulaire de connexion",
+            "data" => [
+               
+            ]
+        ];
     }
     public function logout () {}
 }
