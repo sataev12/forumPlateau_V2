@@ -83,9 +83,11 @@ class SecurityController extends AbstractController{
             "view" => VIEW_DIR."connect/connexion.php",
             "meta_description" => "Une formulaire de connexion",
             "data" => [
-               
+                 
             ]
         ];
     }
+
+
     public function logout () {}
 }

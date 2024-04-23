@@ -58,10 +58,11 @@ class SujetController extends AbstractController implements ControllerInterface 
 
         if(isset($_POST["submit"]) && ($nom != "")) {
             
+            $user_id_connectee = $_SESSION["user"];
             $data = [
                 "titre" => $nom,
                 "categorie_id" => $id,
-                "utilisateur_id" => 1 
+                "utilisateur_id" => $user_id_connectee[0]["id_utilisateur"]
             ];
             $sujetManager->add($data);
         }
