@@ -18,5 +18,10 @@ class UtilisateurManager extends Manager{
         $sql = "SELECT *
                 FROM ".$this->tableName." u
                 WHERE u.email = :email";
+        
+        $result = DAO::select($sql, ['email' => $email]);
+        
+        return $result;
+        
     }
 }
