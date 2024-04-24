@@ -27,27 +27,4 @@ class ForumController extends AbstractController implements ControllerInterface{
         ];
     }
 
-
-
-    
-
-    public function listMessageBySujet($id) {
-
-        $messageManager = new MessageManager();
-        $sujetManager = new SujetManager();
-        $sujet = $sujetManager->findOneById($id);
-
-        $messages = $messageManager->findlistMessageBySujet($id);
-
-        return [
-            "view" => VIEW_DIR."forum/listMessage.php",
-            "meta_description" => "Liste des messages par sujet : ".$sujet,
-            "data" => [
-                "messages" => $messages
-            ]
-            ];
-    }
-
-    
-
 }

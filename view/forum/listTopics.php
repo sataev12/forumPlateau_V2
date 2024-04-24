@@ -7,6 +7,5 @@
 
 <?php
 foreach($topics as $topic ){ ?>
-    <p><a href="index.php?ctrl=forum&action=listMessageBySujet&id=<?= $topic->getId() ?>"><?= $topic ?></a> par <?= $topic->getTitre() ?>  </p>
-    
+    <p><a href="index.php?ctrl=message&action=listMessageBySujet&id=<?= $topic->getId() ?>"><?= $topic ?></a> par <?= $topic->getTitre() ?>  </p>
 <?php }

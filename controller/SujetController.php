@@ -53,18 +53,23 @@ class SujetController extends AbstractController implements ControllerInterface 
         $categoryManager = new CategorieManager();
         $nom = filter_input(INPUT_POST, "nom", FILTER_SANITIZE_SPECIAL_CHARS);
         
+        $session = new Session;
         $sujetManager = new AjoutSujetMenager();
         $categorie = $categoryManager->findOneById($id);
 
         if(isset($_POST["submit"]) && ($nom != "")) {
-            
-            $user_id_connectee = $_SESSION["user"];
-            $data = [
-                "titre" => $nom,
-                "categorie_id" => $id,
-                "utilisateur_id" => $user_id_connectee[0]["id_utilisateur"]
-            ];
-            $sujetManager->add($data);
+
+            $userIdConnectee = $_SESSION["user"];
+            if(!empty($userIdConnectee)){
+                $data = [
+                    "titre" => $nom,
+                    "categorie_id" => $id,
+                    "utilisateur_id" => $userIdConnectee[0]["id_utilisateur"]
+                ];
+                $sujetManager->add($data);
+            }else{
+                $session->addFlash("error", "veuillez se connceter pour pouvoir crée un sujet");
+            }
         }
 
         return [

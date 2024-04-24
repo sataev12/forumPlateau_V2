@@ -1,5 +1,6 @@
 <?php
 namespace Controller;
+use App\Session;
 use App\AbstractController;
 use App\ControllerInterface;
 use Model\Managers\UtilisateurManager;
@@ -89,5 +90,13 @@ class SecurityController extends AbstractController{
     }
 
 
-    public function logout () {}
+    public function logout () {
+        
+        if(!empty($_SESSION["user"])){
+            unset($_SESSION["user"]);
+            Session::addFlash("success", "Logout réussi");
+            $this->redirectTo("forum", "index");
+        }
+        
+    }
 }
