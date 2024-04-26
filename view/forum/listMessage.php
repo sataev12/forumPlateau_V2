@@ -1,7 +1,7 @@
 <?php
     $messages = $result["data"]['messages'];
     $sujet = $result["data"]["sujet"];
-    //var_dump($msgSujetId); die;
+    
 ?>
 
 <h1>Liste des messages du sujet <?= $sujet->getTitre() ?></h1>

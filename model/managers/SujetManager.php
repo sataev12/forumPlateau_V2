@@ -3,6 +3,8 @@ namespace Model\Managers;
 
 use App\Manager;
 use App\DAO;
+use App\Entity;
+use Model\Entities\Utilisateur;
 
 class SujetManager extends Manager{
 
@@ -27,7 +29,6 @@ class SujetManager extends Manager{
             $this->className 
         );
     }
-
     public function modifierSujetManager($data) {
 
         $sql = "UPDATE ".$this->tableName." 
@@ -35,5 +36,26 @@ class SujetManager extends Manager{
                     WHERE id_sujet = :id";
 
             DAO::update($sql, $data);
+    }
+
+    public function findListSujetByUserId($userId) {
+        var_dump("je suis la");
+        $sql = "SELECT *
+                FROM ".$this->tableName." s
+                WHERE s.utilisateur_id = :id";
+
+        return $this->getMultipleResults(
+            DAO::select($sql, ['id' => $userId]),
+            $this->className
+        );
+    }
+
+    public function verouillerSujetByUser($id) {
+        $sql = "UPDATE ".$this->tableName."
+                SET verrouillee = 1
+                WHERE id_sujet = :topicId";
+
+    // Exécute la requête SQL en utilisant le DAO approprié
+    DAO::update($sql, ['topicId' => $id]);
     }
 }

@@ -3,6 +3,8 @@ namespace Controller;
 use App\Session;
 use App\AbstractController;
 use App\ControllerInterface;
+use Model\Managers\MessageManager;
+use Model\Managers\SujetManager;
 use Model\Managers\UtilisateurManager;
 
 
@@ -18,6 +20,7 @@ class SecurityController extends AbstractController{
             $email = filter_input(INPUT_POST, "email", FILTER_VALIDATE_EMAIL, FILTER_SANITIZE_FULL_SPECIAL_CHARS);
             $motDePasse = filter_input(INPUT_POST, "motDePasse", FILTER_SANITIZE_FULL_SPECIAL_CHARS);
             $motDePasse2 = filter_input(INPUT_POST, "motDePasse2", FILTER_SANITIZE_FULL_SPECIAL_CHARS);
+            $role = "role_user";
 
             if($pseudonyme && $email && $motDePasse && $motDePasse2) {
                 $utilisateur = $utilisateurManager->findUserByEmail($email);
@@ -29,7 +32,8 @@ class SecurityController extends AbstractController{
                         $data = [
                             'pseudonyme' => $pseudonyme,
                             'email' => $email,
-                            'motDePasse' => password_hash($motDePasse, PASSWORD_DEFAULT)
+                            'motDePasse' => password_hash($motDePasse, PASSWORD_DEFAULT),
+                            'role' => $role
                         ];
                         $utilisateurManager->add($data);
                         $this->redirectTo("forum", "index");
@@ -63,11 +67,13 @@ class SecurityController extends AbstractController{
         if($email && $password) {
             
             $utilisateur = $utilisateurManager->findUserByEmail($email);
+            //var_dump($utilisateur);die;
             
             // si l'utilisateur existe
             if(!empty($utilisateur)) {
                 
-                $hash = $utilisateur[0]["motDePasse"];
+                $hash = $utilisateur->getMotDePasse();
+                //var_dump($hash);die;
                 
                 if(password_verify($password, $hash)) {
                     $_SESSION["user"] = $utilisateur;
@@ -98,5 +104,26 @@ class SecurityController extends AbstractController{
             $this->redirectTo("forum", "index");
         }
         
+    }
+
+    public function profile() {
+        
+        $sujetManager = new SujetManager();
+        $utilisateurManager = new UtilisateurManager();
+        $messageManager = new MessageManager();
+        $utilisateurActiv = $_SESSION['user'];
+        $userId = $utilisateurActiv->getId();
+        
+        
+        $sujets = $sujetManager->findListSujetByUserId($userId);
+        
+        return [
+            "view" => VIEW_DIR."profil/profil.php",
+            "meta_description" => "Mon profil",
+            "data" => [
+                "sujets" => $sujets
+            ]
+        ];
+
     }
 }

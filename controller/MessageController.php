@@ -48,6 +48,8 @@ class MessageController extends AbstractController implements ControllerInterfac
             ];
     }
 
+    
+
     public function ajoutMessage($id) {
         if(!empty($_SESSION['user'])){
             if(isset($_POST["submit"])) {
@@ -70,8 +72,6 @@ class MessageController extends AbstractController implements ControllerInterfac
         }
         
 
-        
-       
     }
 
     

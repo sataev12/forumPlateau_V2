@@ -27,4 +27,6 @@ class MessageManager extends Manager{
             $this->className
         );
     }
+
+    
 }

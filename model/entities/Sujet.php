@@ -14,6 +14,7 @@ final class Sujet extends Entity{
     private $dateCreation;
     private $categorie;
     private $utilisateur;
+    private $verouillee;
 
     public function __construct($data){         
         $this->hydrate($data);        
@@ -115,6 +116,26 @@ final class Sujet extends Entity{
     public function setDateCreation($dateCreation)
     {
         $this->dateCreation = $dateCreation;
+
+        return $this;
+    }
+
+    /**
+     * Get the value of verouillee
+     */ 
+    public function getVerouillee()
+    {
+        return $this->verouillee;
+    }
+
+    /**
+     * Set the value of verouillee
+     *
+     * @return  self
+     */ 
+    public function setVerouillee($verouillee)
+    {
+        $this->verouillee = $verouillee;
 
         return $this;
     }

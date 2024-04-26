@@ -52,8 +52,9 @@ class SujetController extends AbstractController implements ControllerInterface 
     public function ajoutSujetAct($id) {
         $categoryManager = new CategorieManager();
         $nom = filter_input(INPUT_POST, "nom", FILTER_SANITIZE_SPECIAL_CHARS);
+        $verouille = 0;
         
-        $session = new Session;
+        
         $sujetManager = new AjoutSujetMenager();
         $categorie = $categoryManager->findOneById($id);
 
@@ -64,11 +65,12 @@ class SujetController extends AbstractController implements ControllerInterface 
                 $data = [
                     "titre" => $nom,
                     "categorie_id" => $id,
-                    "utilisateur_id" => $userIdConnectee[0]["id_utilisateur"]
+                    "utilisateur_id" => $userIdConnectee[0]["id_utilisateur"],
+                    "verouillee" => $verouille
                 ];
                 $sujetManager->add($data);
             }else{
-                $session->addFlash("error", "veuillez se connceter pour pouvoir crée un sujet");
+                Session::addFlash("error", "veuillez se connceter pour pouvoir crée un sujet");
             }
         }
 
@@ -103,7 +105,6 @@ class SujetController extends AbstractController implements ControllerInterface 
         $sujetManager = new SujetManager();
         $sujetManager->delete($id);
         
-
         $this->redirectTo("sujet", "listSujet");
     }
 
@@ -133,7 +134,6 @@ class SujetController extends AbstractController implements ControllerInterface 
 
         $sujetManager = new SujetManager;
         
-
         if(isset($_POST["submit"])) {
             if($titre != "") {
                 $data = [
@@ -148,4 +148,15 @@ class SujetController extends AbstractController implements ControllerInterface 
            
         }
     }
+
+    public function verouillerSujet($id) {
+        $sujetManager = new SujetManager();
+        
+        if(isset($_POST["submit"])){
+            $this->redirectTo("forum", "index");
+            $sujetManager->verouillerSujetByUser($id);
+            
+        }
+        
+    }    
 }
