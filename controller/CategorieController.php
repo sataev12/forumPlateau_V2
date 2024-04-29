@@ -7,6 +7,7 @@ use App\ControllerInterface;
 use Model\Managers\CategorieManager;
 use Model\Managers\SujetManager;
 
+
 class CategorieController extends AbstractController implements ControllerInterface {
 
     public function ajoutCategorie() {
@@ -72,15 +73,19 @@ class CategorieController extends AbstractController implements ControllerInterf
         
 
         if(isset($_POST["submit"])) {
-            if($nom !== ""){
+          
+           
+            if($nom !== "" && !empty($_SESSION['user'])){
                 $data = [
                     "id" => $id,
                     "nom" => $nom
                 ];
                 $categorieManager->modifierCategorieManager($data);
-
+                Session::addFlash("success", "Categorie est bien modifié");
                 $this->redirectTo("forum", "index");
                 
+            }else{
+                Session::addFlash("success", "Que les utilisateur connectées ou admin de site ont droit de modifier les categorie");
             }
            
         }

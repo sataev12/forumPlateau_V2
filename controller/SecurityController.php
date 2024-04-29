@@ -10,7 +10,7 @@ use Model\Managers\UtilisateurManager;
 
 class SecurityController extends AbstractController{
     // contiendra les méthodes liées à l'authentification : register, login et logout
-
+    
     public function register () {
         $utilisateurManager = new UtilisateurManager;
         if(isset($_POST["submit"])) {
@@ -116,12 +116,13 @@ class SecurityController extends AbstractController{
         
         
         $sujets = $sujetManager->findListSujetByUserId($userId);
-        
+        $messages = $messageManager->findMessageByUserId($userId);
         return [
             "view" => VIEW_DIR."profil/profil.php",
             "meta_description" => "Mon profil",
             "data" => [
-                "sujets" => $sujets
+                "sujets" => $sujets, 
+                "message" => $messages
             ]
         ];
 

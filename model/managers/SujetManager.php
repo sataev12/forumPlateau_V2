@@ -39,7 +39,7 @@ class SujetManager extends Manager{
     }
 
     public function findListSujetByUserId($userId) {
-        var_dump("je suis la");
+        
         $sql = "SELECT *
                 FROM ".$this->tableName." s
                 WHERE s.utilisateur_id = :id";
@@ -51,11 +51,21 @@ class SujetManager extends Manager{
     }
 
     public function verouillerSujetByUser($id) {
+        parent::connect();
         $sql = "UPDATE ".$this->tableName."
-                SET verrouillee = 1
-                WHERE id_sujet = :topicId";
+                SET verouillee = '1'
+                WHERE id_sujet = :id";
 
-    // Exécute la requête SQL en utilisant le DAO approprié
-    DAO::update($sql, ['topicId' => $id]);
+        // Exécute la requête SQL en utilisant le DAO approprié
+        DAO::update($sql, ['id'=>$id]);
+    }
+
+    public function deverouillerSujetByUser($id) {
+
+        parent::connect();
+        $sql = "UPDATE ".$this->tableName."
+                SET verouillee = '0'
+                WHERE id_sujet = :id";
+        DAO::update($sql, ['id'=>$id]);        
     }
 }

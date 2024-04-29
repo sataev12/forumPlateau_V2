@@ -131,7 +131,7 @@ class SujetController extends AbstractController implements ControllerInterface 
     public function modifierSujet($id) {
         $titre = filter_input(INPUT_POST, "titre", FILTER_SANITIZE_FULL_SPECIAL_CHARS);
         $id = filter_input(INPUT_GET, 'id', FILTER_VALIDATE_INT);
-
+        
         $sujetManager = new SujetManager;
         
         if(isset($_POST["submit"])) {
@@ -152,11 +152,21 @@ class SujetController extends AbstractController implements ControllerInterface 
     public function verouillerSujet($id) {
         $sujetManager = new SujetManager();
         
-        if(isset($_POST["submit"])){
-            $this->redirectTo("forum", "index");
-            $sujetManager->verouillerSujetByUser($id);
-            
-        }
+        $sujetManager->verouillerSujetByUser($id);
         
-    }    
+        $msg = "Sujet est fermée !";
+        Session::addFlash('error', $msg);
+        
+        $this->redirectTo('forum', 'index');
+    }
+    
+    public function deverouillerSujet($id) {
+        $sujetManager = new SujetManager();
+
+        $sujetManager->deverouillerSujetByUser($id);
+
+        $msg = "Sujet est ouvert !";
+        Session::addFlash('error', $msg);
+        $this->redirectTo('forum', 'index');
+    }
 }

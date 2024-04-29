@@ -28,5 +28,22 @@ class MessageManager extends Manager{
         );
     }
 
-    
+    public function findMessageByUserId($userId) {
+
+        $sql = "SELECT *
+                FROM ".$this->tableName." m
+                WHERE m.utilisateur_id = :id";
+        return $this->getMultipleResults(
+            DAO::select($sql, ['id'=>$userId]),
+            $this->className
+        );
+    }
+
+    public function modifierMessage($data) {
+        
+        $sql = "UPDATE ".$this->tableName."
+                SET texte = :texte
+                WHERE id_message = :id";
+        DAO::update($sql, $data);
+    }
 }

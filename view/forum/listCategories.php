@@ -1,7 +1,7 @@
 <?php
     $categories = $result["data"]['categories']; 
 ?>
-
+<a href="index.php?ctrl=categorie&action=ajoutCategorie">Ajouter une categorie</a>
 <h1>Liste des catégories</h1>
 
 <?php

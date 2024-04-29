@@ -48,8 +48,24 @@ class MessageController extends AbstractController implements ControllerInterfac
             ];
     }
 
+    public function modifierMsgByUserForm($id) {
+        $messageManager = new MessageManager();
+        
+        $message = $messageManager->findOneById($id);
+        
+        $msgIdSujet = $message->getSujet();
+        
+        
+        return [
+            "view" => VIEW_DIR."modifier/modifierMessage.php",
+            "meta_description" => "les message d'un utilisateur",
+            "data" => [
+                "message" => $message,
+                "sujet_Id" => $msgIdSujet
+            ]
+            ];
+    }
     
-
     public function ajoutMessage($id) {
         if(!empty($_SESSION['user'])){
             if(isset($_POST["submit"])) {
@@ -70,8 +86,38 @@ class MessageController extends AbstractController implements ControllerInterfac
             Session::addFlash("error", "Que les utilisateurs connectée peuvent envoyer les message");
             $this->redirectTo("message", "listMessageBySujet", "$id");
         }
-        
+    }
 
+    public function ajoutMessageAct($id) {
+        $userIdConnectee = $_SESSION['user'];
+        $role = $userIdConnectee->getRole();
+        if($role == "role_admin"){
+            $texte = filter_input(INPUT_POST, "texte", FILTER_SANITIZE_FULL_SPECIAL_CHARS);
+            $messageManager = new MessageManager();            
+            $data = [
+                "texte" => $texte,
+                "id" => $id
+            ]; 
+            $messageManager->modifierMessage($data);
+            Session::addFlash("success", "Message envoyée");
+            $this->redirectTo("security", "profile", "$id");
+        }
+    }
+
+
+    public function supprimerMessage($id) {
+
+        $userIdConnectee = $_SESSION['user'];
+        $role = $userIdConnectee->getRole();
+        if($role == "role_admin") {
+            
+            $messageManager = new MessageManager();
+            $messageManager->delete($id);
+
+            Session::addFlash("success", "Message supprimée");
+            $this->redirectTo("security", "profile", "$id");
+        }
+        
     }
 
     
