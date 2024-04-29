@@ -38,12 +38,22 @@ class CategorieController extends AbstractController implements ControllerInterf
     }
 
     public function supprimerCategorie($id) {
-        
         $categorieManager = new CategorieManager();
-        $categorieManager->delete($id);
+        if(!empty($_SESSION["user"])) {
+            $userIdConnectee = $_SESSION['user'];
+            $role = $userIdConnectee->getRole();
+            if(!empty($_SESSION['user']) && $role == "role_admin") {
+                
+                $categorieManager->delete($id);
+                
+                Session::addFlash("success", "Categorie est bien supprimer");
+                $this->redirectTo("forum","index");
+            }
+        }else{
+            Session::addFlash("error", "Il faut être un admin de site pour pouvoir supprimer le categories");
+            $this->redirectTo("forum","index");
+        }
         
-
-        $this->redirectTo("forum","index");
     
     }
 
@@ -73,9 +83,10 @@ class CategorieController extends AbstractController implements ControllerInterf
         
 
         if(isset($_POST["submit"])) {
-          
-           
-            if($nom !== "" && !empty($_SESSION['user'])){
+          if(!empty($_SESSION['user'])) {
+            $userIdConnectee = $_SESSION['user'];
+            $role = $userIdConnectee->getRole();
+            if(!empty($_SESSION['user']) || $role == "role_admin" && $nom !== ""){
                 $data = [
                     "id" => $id,
                     "nom" => $nom
@@ -85,10 +96,16 @@ class CategorieController extends AbstractController implements ControllerInterf
                 $this->redirectTo("forum", "index");
                 
             }else{
-                Session::addFlash("success", "Que les utilisateur connectées ou admin de site ont droit de modifier les categorie");
+                    Session::addFlash("success", "Que les utilisateur connectées ou admin de site ont droit de modifier les categorie");
+                    $this->redirectTo("forum", "index");
             }
+            
+          }else{
+            Session::addFlash("error", "Que les utilisateur connectées ou admin de site ont droit de modifier les categorie");
+            $this->redirectTo("forum", "index");
+          }
            
-        }
+        }    
     }   
 
 }
