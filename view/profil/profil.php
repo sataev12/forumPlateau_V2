@@ -29,10 +29,10 @@
         $messages = $result["data"]["message"];
 
         foreach($messages as $message) { ?>
-           <?= $message->getTexte(); ?> 
-           <!-- Possibiliter modifier et supprimer si vous êtes un auteur de sujet -->
-                <button><a href="index.php?ctrl=message&action=modifierMsgByUserForm&id=<?= $message->getId() ?>">Modifier</a></button>
-                <button><a href="index.php?ctrl=message&action=supprimerMessage&id=<?= $message->getId() ?>">Supprimer</a></button><br>
+            <?= $message->getTexte(); ?> 
+            <!-- Possibiliter modifier et supprimer si vous êtes un auteur de sujet -->
+            <button><a href="index.php?ctrl=message&action=modifierMsgByUserForm&id=<?= $message->getId() ?>">Modifier</a></button>
+            <button><a href="index.php?ctrl=message&action=supprimerMessage&id=<?= $message->getId() ?>">Supprimer</a></button><br>
     <?php } ?>
     
 

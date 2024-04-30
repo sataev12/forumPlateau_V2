@@ -57,7 +57,10 @@ class SecurityController extends AbstractController{
 
     // methode login, pour se connecté si l'utilisateur a déjà la compte
     public function login () {
-
+        $session = new Session();
+        if ($session::getUser()!= false){
+            $this->redirectTo("home");
+        }
         $utilisateurManager = new UtilisateurManager;
 
         $email = filter_input(INPUT_POST, "email", FILTER_SANITIZE_FULL_SPECIAL_CHARS, FILTER_VALIDATE_EMAIL);
@@ -126,5 +129,22 @@ class SecurityController extends AbstractController{
             ]
         ];
 
+    }
+
+    public function bannir($id) {
+        
+        $utilisateurManager = new UtilisateurManager();
+
+        $utilisateurBan = $utilisateurManager->findOneById($id);
+        $valeurBan = $utilisateurBan->getBannir();
+        if($valeurBan == "0"){
+            $utilisateurManager->bannirUtilisateur($id);
+
+            Session::addFlash("success", "Utilisateur est bloquée ");
+            $this->redirectTo("security", "profile", "$id");
+        }else if($valeurBan == "1") {
+            $utilisateurManager->debloquer($id);
+        }
+        
     }
 }

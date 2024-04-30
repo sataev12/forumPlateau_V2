@@ -13,12 +13,14 @@ class HomeController extends AbstractController implements ControllerInterface {
             "meta_description" => "Page d'accueil du forum"
         ];
     }
+
+
         
     public function users(){
-        $this->restrictTo("ROLE_USER");
-
+        
+        $this->restrictTo("role_user");
         $manager = new UtilisateurManager();
-        $users = $manager->findAll(['register_date', 'DESC']);
+        $users = $manager->findAll(['dateInscription', 'DESC']);
 
         return [
             "view" => VIEW_DIR."security/users.php",

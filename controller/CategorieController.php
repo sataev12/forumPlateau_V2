@@ -12,27 +12,37 @@ class CategorieController extends AbstractController implements ControllerInterf
 
     public function ajoutCategorie() {
         
-        $nom = filter_input(INPUT_POST, "nom", FILTER_SANITIZE_FULL_SPECIAL_CHARS);
-        $categorieManager = new CategorieManager();
-        if(isset($_POST["submit"])) {
-            
-            if($nom != "") {
-                
-                $data = ['nom' => $nom];
-                $categorieManager->add($data);
-            }
-        }
-        // $data = ['nom' => 'test'];
-        
-        // $categorieManager->add($data);
+        if(!empty($_SESSION["user"])) {
+            $userIdConnectee = $_SESSION['user'];
+            $role = $userIdConnectee->getRole();
+            if(!empty($_SESSION['user']) && $role == "role_admin") {
+                $nom = filter_input(INPUT_POST, "nom", FILTER_SANITIZE_FULL_SPECIAL_CHARS);
+                $categorieManager = new CategorieManager();
+                if(isset($_POST["submit"])) {
+                    
+                    if($nom != "") {
+                        
+                        $data = ['nom' => $nom];
+                        $categorieManager->add($data);
+                    }
+                }
+                return[
+                    "view" => VIEW_DIR."ajout/ajoutCategories.php",
+                    "meta_description" => "Ajouter un nouveau categorie",
+                    "data" => [
+                        
+                    ]
+                ];
 
-        return[
-            "view" => VIEW_DIR."ajout/ajoutCategories.php",
-            "meta_description" => "Ajouter un nouveau categorie",
-            "data" => [
-                
-            ]
-        ];
+            }else{
+                Session::addFlash("success", "Que admin peut ajouter une categorie");
+                $this->redirectTo("forum","index");
+            }
+        }else{
+            Session::addFlash("success", "Que admin peut ajouter une categorie");
+            $this->redirectTo("forum","index");
+        }
+        
 
         
     }

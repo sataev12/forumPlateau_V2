@@ -14,6 +14,7 @@ final class Utilisateur extends Entity{
     private $role;
     private $motDePasse;
     private $email;
+    private $bannir;
 
     public function __construct($data){         
         $this->hydrate($data);        
@@ -119,5 +120,32 @@ final class Utilisateur extends Entity{
         $this->email = $email;
 
         return $this;
+    }
+
+    /**
+     * Get the value of bannir
+     */ 
+    public function getBannir()
+    {
+        return $this->bannir;
+    }
+
+    /**
+     * Set the value of bannir
+     *
+     * @return  self
+     */ 
+    public function setBannir($bannir)
+    {
+        $this->bannir = $bannir;
+
+        return $this;
+    }
+
+    public function hasRole($role)
+    {
+        
+        $result = (in_array($role, str_replace(" ", "",explode(",",$this->role)))) ? true : false;
+        return $result;
     }
 }

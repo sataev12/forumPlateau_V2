@@ -27,4 +27,21 @@ class UtilisateurManager extends Manager{
         return $result;
         
     }
+
+    public function bannirUtilisateur($id) {
+        
+        $sql = "UPDATE ".$this->tableName."
+                SET bannir = 1
+                WHERE id_utilisateur = :id";
+                DAO::update($sql, [":id" => $id]);
+    }
+
+    public function debloquer($id) {
+
+        $sql = "UPDATE ".$this->tableName."
+                SET bannir = 0
+                WHERE id_utilisateur = :id";
+                DAO::update($sql, [":id => $id"]);
+    }
 }
+

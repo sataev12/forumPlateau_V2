@@ -24,6 +24,7 @@
                             <?php
                             if(App\Session::isAdmin()){
                                 ?>
+                                
                                 <a href="index.php?ctrl=home&action=users">Voir la liste des gens</a>
                             <?php } ?>
                         </div>
@@ -42,8 +43,7 @@
                                 <a href="index.php?ctrl=security&action=login">Connexion</a>
                                 <a href="index.php?ctrl=security&action=register">Inscription</a>
                                 <a href="index.php?ctrl=forum&action=index">Liste des catégories</a>
-                                <a href="index.php?ctrl=sujet&action=listSujet">liste des sujets</a>
-                                <a href="index.php?ctrl=security&action=register">S'inscrire</a>
+                                <!-- <a href="index.php?ctrl=sujet&action=listSujet">liste des sujets</a> -->
                             <?php
                             }
                         ?>
